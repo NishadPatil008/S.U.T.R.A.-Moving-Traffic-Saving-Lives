@@ -62,7 +62,7 @@ Use the integrated AI Command Panel on the dashboard to control the node live:
 
 ## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the GPL-3.0 License.
 
 **Copyright (c) 2026 Nishad Patil, Sandesh Kotwal, Arnav Awatipatil, Sai Chavan, and Devdatta Shahane.**
 Students of **MIT World Peace University (MIT-WPU), Kothrud, Pune**.
