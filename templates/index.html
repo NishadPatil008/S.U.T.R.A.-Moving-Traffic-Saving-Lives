@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S.U.T.R.A. Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="demo-overlay" id="demoOverlay">
+      <div class="demo-overlay-content">
+        <h2>How to Demo S.U.T.R.A.</h2>
+        <ul>
+          <li><strong>Signal for Help (SOS):</strong> Show palm → tuck thumb → make fist 3 times quickly</li>
+          <li><strong>Fire/Ambulance:</strong> Play siren audio (500–3000 Hz) from your phone</li>
+          <li><strong>Festival Mode:</strong> Toggle in India Modes card (procession/festival)</li>
+          <li><strong>Demo Mode:</strong> Add <code>?demo=1</code> to URL or type <code>/demo</code> in AI Command</li>
+        </ul>
+        <h3>Config (config.json)</h3>
+        <p><code>camera.video_path</code> – Fallback video when camera fails. <code>accident_detection.consecutive_frames</code> – Frames needed for crash. <code>audio.device_id</code> – Mic for siren.</p>
+        <button type="button" class="demo-overlay-dismiss" id="demoOverlayDismiss">Got it</button>
+      </div>
+    </div>
+
+    <div class="dashboard-container">
+      <header class="top-bar">
+        <div class="logo-section">
+          <img src="{{ url_for('static', filename='logo.png') }}" alt="SUTRA Logo" class="brand-logo" />
+          <div class="title-block">
+            <h1>S.U.T.R.A. <span class="subtitle">MOVING TRAFFIC | SAVING LIVES.</span></h1>
+          </div>
+        </div>
+
+        <div class="user-section">
+          <button type="button" class="help-btn" id="helpBtn" title="How to demo">?</button>
+          <div class="status-badges" id="statusBadges"></div>
+          <div class="time-display" id="uptime">00:00:00</div>
+          <div class="user-profile">
+            <img src="https://ui-avatars.com/api/?name=Admin&background=0D8ABC&color=fff&rounded=true" alt="Admin profile">
+            <span>Administrator</span>
+          </div>
+        </div>
+      </header>
+
+      <div class="main-content">
+        <aside class="sidebar left">
+          <div class="card">
+            <div class="card-header">
+              <h3>Lane A Signal (Camera)</h3>
+            </div>
+            <div class="traffic-light-container" id="trafficLightLeft">
+              <div class="light red" data-color="RED"></div>
+              <div class="light yellow" data-color="YELLOW"></div>
+              <div class="light green" data-color="GREEN"></div>
+            </div>
+          </div>
+
+          <div class="card status-card" id="safetyCard">
+            <div class="card-icon safe-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div class="card-content">
+              <h4>Guardian Angel (SOS)</h4>
+              <p class="status-value" id="safetyText">Safe</p>
+            </div>
+          </div>
+
+          <div class="card status-card" id="roadCard">
+            <div class="card-icon warning-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div class="card-content">
+              <h4>Road & Incident Sensor</h4>
+              <p class="status-value" id="roadText">Clear</p>
+            </div>
+          </div>
+
+          <div class="card status-card alert" id="multiEmergencyCard" style="display: none; border-color: var(--danger); box-shadow: 0 0 15px rgba(253, 93, 147, 0.4);">
+            <div class="card-icon alert-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            </div>
+            <div class="card-content">
+              <h4>CRITICAL ALERT</h4>
+              <p class="status-value" style="color: var(--danger); font-size: 0.95rem; line-height: 1.4;">• Ambulance Detected<br>• Accident Occurred</p>
+            </div>
+          </div>
+
+          <div class="card status-card warning" id="festivalStatusCard" style="display: none; border-color: var(--warning);">
+            <div class="card-icon warning-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </div>
+            <div class="card-content">
+              <h4>Festival Mode</h4>
+              <p class="status-value" style="color: var(--warning); font-size: 0.95rem;">Extended Pedestrian Phase</p>
+            </div>
+          </div>
+
+          <div class="card india-modes-card">
+            <div class="card-header">
+              <h3>India Modes</h3>
+            </div>
+            <div class="modes-grid">
+              <div class="mode-item" id="greenCorridorItem">
+                <span class="mode-label">Green Corridor (Fire/Amb)</span>
+                <span class="mode-value" id="greenCorridorText">Inactive</span>
+              </div>
+              <div class="mode-item festival-mode-item">
+                <span class="mode-label">Festival Mode</span>
+                <button type="button" class="festival-toggle" id="festivalToggle" title="Toggle for processions/festivals">OFF</button>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <section class="center-panel">
+          <div class="card video-card">
+            <div class="card-header">
+              <h3>Live Edge-AI Feed</h3>
+              <div class="live-badge" id="liveBadge">
+                <span class="pulse-dot"></span> Live
+              </div>
+            </div>
+            <div class="video-wrapper" id="videoWrapper">
+              <div class="video-loading" id="videoLoading">
+                <div class="spinner"></div>
+                <p>Connecting to feed...</p>
+              </div>
+              <img id="liveFeed" src="{{ url_for('video_feed') }}" alt="Live webcam AI feed" />
+              <div class="video-error" id="videoError" style="display:none">
+                <p>Feed unavailable</p>
+                <p class="video-error-detail" id="videoErrorDetail"></p>
+              </div>
+            </div>
+          </div>
+          <div class="card log-card">
+            <div class="card-header">
+              <h3>System Events</h3>
+            </div>
+            <div id="logBox" class="log-box"></div>
+          </div>
+          <div class="card command-card">
+            <div class="card-header">
+              <h3>AI Command Panel</h3>
+              <span class="command-hint">Commands run on server. Type /help</span>
+            </div>
+            <div class="command-row">
+              <input type="text" id="commandInput" class="command-input" placeholder="/events, /demo, /config, /reload, /devices, /help" />
+              <button type="button" id="commandRun" class="command-run">Run</button>
+            </div>
+            <div id="commandOutput" class="command-output"></div>
+          </div>
+        </section>
+
+        <aside class="sidebar right">
+          <div class="card">
+            <div class="card-header">
+              <h3>Lane B Signal (Sim)</h3>
+            </div>
+            <div class="traffic-light-container" id="trafficLightRight">
+              <div class="light red" data-color="RED"></div>
+              <div class="light yellow" data-color="YELLOW"></div>
+              <div class="light green" data-color="GREEN"></div>
+            </div>
+          </div>
+
+          <div class="card status-card" id="v2iCard">
+            <div class="card-icon safe-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
+            </div>
+            <div class="card-content">
+              <h4>Traffic State Protocol</h4>
+              <p class="status-value" id="v2iText" style="font-size: 1.1rem; margin-top: 5px;">GLIDE SYNC ACTIVE</p>
+            </div>
+          </div>
+
+          <div class="card metrics-card" id="trafficMetaCard">
+            <div class="card-header">
+              <h3>Intersection Flow</h3>
+            </div>
+            <div class="metrics-grid">
+              <div class="metric">
+                <span class="metric-label">Lane A Count</span>
+                <span class="metric-value" id="trafficCountA">0</span>
+              </div>
+              <div class="metric">
+                <span class="metric-label">Lane B Count</span>
+                <span class="metric-value" id="trafficCountB">0</span>
+              </div>
+              <div class="metric full-width">
+                <span class="metric-label">Active Phase Timer</span>
+                <span class="metric-value highlight countdown-display" id="countdownTimer" data-low="false" data-paused="false">0s</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card events-card">
+            <div class="card-header">
+              <h3>Event Log</h3>
+              <div class="events-toolbar">
+                <select id="eventFilter" class="event-filter">
+                  <option value="all">All</option>
+                  <option value="sos">SOS</option>
+                  <option value="emergency">Fire/Amb</option>
+                  <option value="accident">Accident</option>
+                  <option value="animal">Animal</option>
+                  <option value="system">System</option>
+                </select>
+                <button type="button" class="events-refresh" id="eventsRefresh" title="Refresh">↻</button>
+              </div>
+            </div>
+            <div id="eventsBox" class="events-box"></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>

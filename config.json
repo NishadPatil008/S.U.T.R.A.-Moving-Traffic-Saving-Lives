@@ -1,0 +1,50 @@
+{
+  "camera": {
+    "index": 0,
+    "frame_width": 1280,
+    "frame_height": 720,
+    "video_path": ""
+  },
+  "model": {
+    "path": "yolov8s.pt",
+    "frame_skip_n": 3,
+    "confidence": 0.55
+  },
+  "audio": {
+    "device_id": null,
+    "sample_rate": 22050,
+    "channels": 1,
+    "chunk_seconds": 0.4,
+    "auto_detect": true
+  },
+  "siren_detection": {
+    "freq_low_hz": 500,
+    "freq_high_hz": 3000,
+    "amplitude_threshold": 25.0,
+    "hold_seconds": 5.0
+  },
+  "object_classes": {
+    "vehicles": ["car", "motorcycle", "truck", "bus"],
+    "emergency_proxy": [], 
+    "animals": ["cow", "dog", "goat", "horse"]
+  },
+  "traffic_controller": {
+    "base_phase_duration": 10.0,
+    "min_green": 5.0,
+    "max_green": 25.0
+  },
+  "accident_detection": {
+    "iou_threshold": 0.05,
+    "consecutive_frames": 2,
+    "collision_padding": 40
+  },
+  "demo_mode": {
+    "enabled": false
+  },
+  "recording": {
+    "enabled": true,
+    "post_seconds": 15,
+    "fps": 10,
+    "sos_min_activations": 1
+  }
+}

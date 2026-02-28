@@ -1,0 +1,25 @@
+# Python 
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+venv/
+ENV/
+
+# S.U.T.R.A. Project Specifics
+# Ignore the large AI model weights
+*.pt
+
+# Ignore auto-saved incident recordings
+recordings/
+
+# Flask/Development
+instance/
+.pytest_cache/
+.vscode/
+.idea/
+
+# OS Specific
+.DS_Store
+Thumbs.db
