@@ -60,18 +60,6 @@ Use the integrated AI Command Panel on the dashboard to control the node live:
 * `/config` — View current JSON backend parameters.
 * `/reload` — Hot-swap changes made to `config.json` without restarting the server.
 
-## 📂 Project Structure
-
-```text
-/SUTRA-Project
-│
-├── app.py              # Main AI Engine & Flask Backend
-├── config.json         # Live configuration parameters
-├── recordings/         # Auto-saved incident MP4 clips
-├── static/             # Assets (CSS, JS, and logo.png)
-├── templates/          # Dashboard UI (index.html)
-└── yolov8s.pt          # AI Model Weights
-
 ## 📄 License
 
 This project is licensed under the MIT License.
@@ -85,3 +73,16 @@ Integrated B.Tech Second Year.
 * **Arnav Awatipatil** — Computer Science Engineering (CSE)
 * **Sai Chavan** — Computer Science Engineering (CSE)
 * **Devdatta Shahane** — Mechanical Engineering (ME)
+  
+## 📂 Project Structure
+
+```text
+/SUTRA-Project
+│
+├── app.py              # Main AI Engine & Flask Backend
+├── config.json         # Live configuration parameters
+├── recordings/         # Auto-saved incident MP4 clips
+├── static/             # Assets (CSS, JS, and logo.png)
+├── templates/          # Dashboard UI (index.html)
+└── yolov8s.pt          # AI Model Weights
+
