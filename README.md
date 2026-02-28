@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="static/logo.png" alt="S.U.T.R.A. Logo" width="200">
+</p>
 # 🚦 S.U.T.R.A. — Smart Urban Traffic & Response Architecture
 ### **MOVING TRAFFIC | SAVING LIVES**
 
