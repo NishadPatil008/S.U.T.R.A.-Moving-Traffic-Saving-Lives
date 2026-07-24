@@ -16,7 +16,7 @@
 
 ## 🛠️ Tech Stack
 
-* **Backend:** Python, Flask (Thread-Safe Background Worker Architecture)
+
 * **AI/Vision:** Ultralytics YOLOv8, Google MediaPipe, OpenCV
 * **Signal Processing:** SciPy (Butterworth Bandpass Filtering), SoundDevice, NumPy
 * **Frontend:** HTML5, JavaScript (Async Polling, LocalStorage), CSS3
