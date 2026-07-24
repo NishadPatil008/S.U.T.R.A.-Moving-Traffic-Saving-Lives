@@ -15,7 +15,7 @@
 * **Interactive UI & Persistence:** Features a highly modern Dark Matrix UI with an interactive `/demo` tutorial sequence. The dashboard uses browser `localStorage` to perfectly remember your last loaded media feed even if the page refreshes.
 
 ## 🛠️ Tech Stack
-
+* **Backend:** Python, Flask (Thread-Safe Background Worker Architecture)
 * **Backend:** Python, Flask (Thread-Safe Background Worker Architecture)
 * **AI/Vision:** Ultralytics YOLOv8, Google MediaPipe, OpenCV
 * **Signal Processing:** SciPy (Butterworth Bandpass Filtering), SoundDevice, NumPy
